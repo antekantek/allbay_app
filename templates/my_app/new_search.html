@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <h2 style="text-align: center">{{ search | title }}</h2>
+    <div class="row">
+        {% for post in final_listings %}
+            <div class="col s3">
+                <div class="card"style="height:400px">
+                    <div class="card-image"style="height:50%">
+                        <img src="{{ post.3 }}"style="width:50%;max-height:100%;position:relative;top:25%;left:25%">
+                    </div>
+                    <div class="hehe" style="position:absolute;bottom:1%">
+                    <div class="card-content">
+                        <p>{{ post.0 }}</p>
+                    </div>
+                    <div class="card-action">
+                        <a href="{{ post.1 }}">View listing: Price {{ post.2 }} zł</a>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <form action="{% url 'new_search' %}" method="post">
+            {% csrf_token %}
+
+           <input type="hidden"  name="search" value="{{search}}">
+           <input type="hidden"  name="prev" value="{{prev}}">
+
+            <div style="float: left ;width:100px">
+            <button class="btn waves-effect deep-purple " type="submit" name="action">Previous
+             <i class="material-icons right">send</i>
+            </button>
+            </div>
+    </form>
+
+
+    <form action="{% url 'new_search' %}" method="post">
+            {% csrf_token %}
+
+           <input type="hidden"  name="search" value="{{search}}">
+           <input type="hidden"  name="page" value="{{page}}">
+
+            <div style="float: right; width: 130px">
+            <button class="btn waves-effect deep-purple " type="submit" name="action">Next
+             <i class="material-icons right">send</i>
+            </button>
+            </div>
+    </form>
+
+
+
+
+
+{% endblock content %}
