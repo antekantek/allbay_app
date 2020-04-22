@@ -46,8 +46,8 @@ def new_search(request):
         post_price=float(post_price)
         post_img=pa.find("img").get('data-src')
         if post_img != None:
-            final_listings.append((((post_title, post_url, post_price, post_img))))
-    #print(len(final_listings))
+            final_listings.append((post_title, post_url, post_price, post_img))
+    print(len(final_listings))
 
 
     for pb in post_listings2:
@@ -62,8 +62,8 @@ def new_search(request):
 
 
 
-        final_listings.append((((post_title, post_url, post_price, post_img))))
-    #print(len(final_listings))
+        final_listings.append((post_title, post_url, post_price, post_img))
+    print(len(final_listings))
 
 
 
