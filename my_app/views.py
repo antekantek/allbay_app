@@ -24,46 +24,51 @@ def new_search(request):
 
     search=request.POST.get('search')
     final_url=BASE_ALL_URL.format(quote_plus(search))
+
     final_url2 = BASE_EBA_URL.format(quote_plus(search))
     response=requests.get(final_url)
     response2=requests.get(final_url2)
     soup=BeautifulSoup(response.text,'html.parser')
+
     soup2=BeautifulSoup(response2.text, 'html.parser')
-    post_listings=soup.find_all(class_="_9c44d_1V-js")
-    post_listings2=soup2.find_all(class_="sresult lvresult clearfix li")
+    post_listings=soup.find_all(class_="mpof_ki mqen_m6 mp7g_oh mh36_0 mvrt_0 mg9e_8 mj7a_8 m7er_k4 _1y62o _9c44d_1I1gg")
+    post_listings2=soup2.find_all(class_="s-item   ")
 
-
+    print(post_listings2)
 
 
     final_listings=[]
 
 
     for pa in post_listings:
-        post_title=pa.find(class_="_9c44d_LUA1k").text
+        post_title=pa.find(class_="_w7z6o _uj8z7 meqh_en mpof_z0 mqu1_16 _9c44d_2vTdY").text
         post_url=pa.find('a').get('href')
-        post_price=pa.find("span",class_="_9c44d_1zemI").text.replace(",", ".").replace(" ","")
+        post_price=pa.find("span",class_="_1svub _lf05o").text.replace(",", ".").replace(" ","")
         post_price=post_price[:-2]
         post_price=float(post_price)
         post_img=pa.find("img").get('data-src')
         if post_img != None:
             final_listings.append((post_title, post_url, post_price, post_img))
-    #print(len(final_listings))
+    print(len(final_listings))
 
 
     for pb in post_listings2:
-        post_title=pb.find("h3",class_="lvtitle").text
-        post_url = pb.find('a').get('href')
-        post_price = pb.find("span", class_="bold").text.replace(",", ".").replace(" ","")
+        post_title=pb.find(class_="s-item__title").text
+        print(post_title)
+        post_url = pb.find(class_="s-item__link").get('href')
+        print(post_url)
+        post_price = pb.find("span", class_="ITALIC").text.replace(",", ".").replace(" ","")
+        print(post_price)
         post_price = post_price[:-2]
         if len(post_price)>=8:
             post_price=post_price[6:]
         post_price = float(post_price)
-        post_img=pb.find("img").get('src')
+        post_img=pb.find(class_="img").get('src')
 
 
 
         final_listings.append((post_title, post_url, post_price, post_img))
-    #print(len(final_listings))
+    print(len(final_listings))
 
 
 
