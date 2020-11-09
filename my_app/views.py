@@ -58,12 +58,17 @@ def new_search(request):
         post_title=ia.get('alt')
         post_img = ia.get('src')
         post_url=ib.get('href')
-        post_price=ic.find("span",class_="ITALIC").get_text().replace(",", ".")
 
-        post_price = post_price[:-2]
-        if len(post_price)>=8:
-            post_price=post_price[6:]
-        post_price = float(post_price)
+
+        try:
+            post_price=ic.find("span",class_="ITALIC").get_text().replace(",", ".")
+            post_price = post_price[:-2]
+            if len(post_price)>=8:
+                post_price=post_price[6:]
+            post_price = float(post_price)
+        except:
+            post_price=0
+
 
         final_listings1.append((post_title, post_url, post_price, post_img))
 
